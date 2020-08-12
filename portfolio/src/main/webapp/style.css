@@ -4,6 +4,13 @@
   width: 650px;
 }
 
+
 #greeting-container {
   margin-top: 20px;
+}
+
+div {
+  border: 15px lightblue;
+  padding: 50px;
+  margin: 20px;
 }

@@ -26,3 +26,15 @@ function addRandomGreeting() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
+
+/**
+*show the next picture on the screen
+ */
+function nextPicture()
+{
+    const allPictures = [];
+    const pic = allPictures[0];
+    const imgContainer = document.getElementById('img-container');
+    
+
+}
