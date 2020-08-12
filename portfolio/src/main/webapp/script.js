@@ -30,11 +30,25 @@ function addRandomGreeting() {
 /**
 *show the next picture on the screen
  */
+ //ask for static variable because we heard that globalis not good
+picturesIndex = 0;
+const allPictures = ['20060919215839_DSC_6806.JPG', '20060919222117_DSC_6821.JPG', '20170204094939_IMG_1368.JPG'
+, '20170209104355_IMG_1531.JPG', '20170213143558_IMG_1735.JPG', '20170222180214_IMG_1834.JPG', '20170302135232_IMG_2101.JPG',
+'IMG_20170115_202802_153.jpg'];
 function nextPicture()
 {
-    const allPictures = [];
-    const pic = allPictures[0];
+    picturesIndex++;
+    picturesIndex = picturesIndex === allPictures.length? 0 : picturesIndex;   
+    const pic = allPictures[picturesIndex];
     const imgContainer = document.getElementById('img-container');
-    
+    imgContainer.src = '/images/' + pic;
+}
 
+function previousPicture()
+{
+    picturesIndex--;
+    picturesIndex = picturesIndex < 0 ? allPictures.length - 1 : picturesIndex;   
+    const pic = allPictures[picturesIndex];
+    const imgContainer = document.getElementById('img-container');
+    imgContainer.src = '/images/' + pic;
 }

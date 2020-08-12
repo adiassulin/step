@@ -10,7 +10,17 @@
 }
 
 div {
-  border: 15px lightblue;
-  padding: 50px;
+  border: 15px blue;
+  padding: 30px;
   margin: 20px;
+}
+
+button {
+    padding: 20px;
+    background-color: lightskyblue;
+}
+
+#img-container {
+    height: 50%;
+    width: 50%;
 }
