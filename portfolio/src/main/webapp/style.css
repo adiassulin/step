@@ -2,6 +2,7 @@
   margin-left: auto;
   margin-right: auto;
   width: 650px;
+  
 }
 
 
@@ -10,25 +11,36 @@
 }
 
 h1 {
-    align-content: center;
+    text-align: center;
     color: lightskyblue;
 }
 
 div {
-    align-content:center;
-  border: 15px blue;
+    font-family: Courier;   
+  text-align: center;
   padding: 15px;
   margin: 15px;
 }
 
+#intro-new-zealand {
+     border: 5px outset lightskyblue; 
+
+}
+#margin {
+     border: 5px outset lightskyblue; 
+}
 button {
     padding: 20px;
     background-color: lightskyblue;
 }
 
 table {
+    margin-left: auto;
+  margin-right: auto;
     width: 80%;
     border-spacing: 5px;
+    text-align: center;
+    
 }
 
 table, th, td {
@@ -37,6 +49,6 @@ table, th, td {
 }
 
 #img-container {
-    height: 50%;
-    width: 50%;
+    height: 55%;
+    width: 60%;
 }
