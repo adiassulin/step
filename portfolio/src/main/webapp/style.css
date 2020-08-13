@@ -12,6 +12,7 @@
 
 h1 {
     text-align: center;
+    font-size: 30px;
     color: lightskyblue;
 }
 
@@ -23,7 +24,9 @@ div {
 }
 
 #intro-new-zealand {
+    font-size: 20px;
      border: 5px outset lightskyblue; 
+     background-color: lightyellow;
 
 }
 #margin {
@@ -38,14 +41,19 @@ table {
     margin-left: auto;
   margin-right: auto;
     width: 80%;
-    border-spacing: 5px;
+    border-spacing: 5px lightyellow;;
     text-align: center;
+    background-color: lightyellow;
     
 }
 
 table, th, td {
   border: 1px solid black;
   padding: 15px;
+}
+
+td {
+    background-color: white;
 }
 
 #img-container {
