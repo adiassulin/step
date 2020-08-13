@@ -68,10 +68,13 @@ function previousPicture()
     changePictureInDom();
 }
 
-function displayHakaFrame(){
+/**
+* displays the haka videwin the iframe
+ */
+function displayHakaFrame()
+{
     const hakaIframe = document.getElementById('hakaIframe');
     hakaIframe.height = 345;
     hakaIframe.width = 420;
     hakaIframe.style.visibility = 'visible';
-    
 }
