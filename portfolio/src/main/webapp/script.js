@@ -77,4 +77,7 @@ function displayHakaFrame()
     hakaIframe.height = 345;
     hakaIframe.width = 420;
     hakaIframe.style.visibility = 'visible';
+
+    const hakaVideoButton = document.getElementById('hakaVideoButton')
+    hakaVideoButton.style.visibility = 'hidden';
 }
