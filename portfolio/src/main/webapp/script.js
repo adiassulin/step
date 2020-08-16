@@ -81,3 +81,13 @@ function displayHakaFrame()
     const hakaVideoButton = document.getElementById('hakaVideoButton')
     hakaVideoButton.style.visibility = 'hidden';
 }
+
+
+
+//week 3 -server try
+function randomTrack()
+{
+    fetch('/data').then(response => response.text()).then((text)=> {
+        document.getElementById('randomTrack').textContent = text;
+    });
+}
