@@ -13,6 +13,7 @@
 // limitations under the License.
 
 package com.google.sps.servlets;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
@@ -41,8 +42,14 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html;");
-    String track = tracks.get((int) (Math.random() * tracks.size()));
-    response.getWriter().println(track);
+    // response.setContentType("text/html;");
+    // String track = tracks.get((int) (Math.random() * tracks.size()));
+    // response.getWriter().println(track);
+
+    Gson gson = new Gson();
+    String json = gson.toJson(tracks);
+
+    response.setContentType("application/json;");
+    response.getWriter().println(json);
   }
 }

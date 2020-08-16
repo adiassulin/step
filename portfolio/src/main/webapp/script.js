@@ -91,3 +91,13 @@ function randomTrack()
         document.getElementById('randomTrack').textContent = text;
     });
 }
+
+function showTracks()
+{
+    fetch('/data').then(response => response.json()).then(tracks => 
+    {
+        console.log(tracks);
+        document.getElementById('randomTrack').textContent = tracks;
+
+    })
+}
