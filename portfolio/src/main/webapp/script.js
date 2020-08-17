@@ -85,19 +85,30 @@ function displayHakaFrame()
 
 
 //week 3 -server try
-function randomTrack()
+// function randomTrack()
+// {
+//     fetch('/data').then(response => response.text()).then((text)=> {
+//         document.getElementById('randomTrack').textContent = text;
+//     });
+// }
+
+// function showTracks()
+// {
+//     fetch('/data').then(response => response.json()).then(tracks => 
+//     {
+//         console.log(tracks);
+//         document.getElementById('randomTrack').textContent = tracks;
+
+//     })
+// }
+
+function getComments()
 {
-    fetch('/data').then(response => response.text()).then((text)=> {
-        document.getElementById('randomTrack').textContent = text;
+    fetch('/data').then(response => response.json()).then(comments => {
+        comments.forEach(comment=> {
+            let com = document.createElement('li');
+            com.textContent = comment;
+            document.getElementById('comments').appendChild(com);
+        })
     });
-}
-
-function showTracks()
-{
-    fetch('/data').then(response => response.json()).then(tracks => 
-    {
-        console.log(tracks);
-        document.getElementById('randomTrack').textContent = tracks;
-
-    })
 }

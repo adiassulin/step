@@ -27,29 +27,26 @@ import java.util.List;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-    private ArrayList<String> tracks;
+    private ArrayList<String> comments = new ArrayList<>();
 
-     @Override
-    public void init() {
-    tracks = new ArrayList<>();
-    tracks.add("Tongariro Alpine crossing");
-    tracks.add("Milford-sound");
-    tracks.add("Abel Tasman coast track");
-    tracks.add("Routeburn Track");
-    tracks.add("Kepler Track");
-    tracks.add("Mueller hut");
-  }
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // response.setContentType("text/html;");
-    // String track = tracks.get((int) (Math.random() * tracks.size()));
-    // response.getWriter().println(track);
-
-    Gson gson = new Gson();
-    String json = gson.toJson(tracks);
-
-    response.setContentType("application/json;");
+    response.setContentType("application/json");
+    String json = new Gson().toJson(comments);
     response.getWriter().println(json);
   }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
+ {
+    String comment = request.getParameter("text-input");
+    comments.add(comment);
+
+    // Redirect back to the HTML page.
+    response.sendRedirect("/index.html");
+  }
+
+
+
 }

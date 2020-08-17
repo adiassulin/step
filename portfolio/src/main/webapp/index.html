@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body>
-    <div id="margin">
+  <body onload="getComments()">
+       <div id="margin">
         <div id="border">
             <h1 id ="header">discover <b>NEW-ZEALAND</b></h1>
             <div id="intro-new-zealand">
@@ -51,9 +51,15 @@
                 <button onclick="nextPicture()">next pic</button>
             </div>
             <div>
-                <!-- <p>what's my next Random track in NZ:</p> -->
-                <button onclick='showTracks()'>show optional tracks</button>
-                <p id='randomTrack'></p>
+                
+                <form action="/data" method="POST">
+                    <p><b>enter your comment: </b></p>
+                    <textarea name="text-input">type here... </textarea>
+                    <br/>
+                    <input type="submit" />
+                </form>
+                <p>the comments:</p>
+                <ol id='comments'></ol>
         </div>
     </div>
   </body>
