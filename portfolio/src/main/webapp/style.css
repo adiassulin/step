@@ -64,6 +64,10 @@ td {
   border:5px lightyellow;
 }
 
+#hakaIframe {
+  visibility: hidden;
+}
+
 ol {
   border: 5px lightyellow;
   padding: 5px;
