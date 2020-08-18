@@ -81,6 +81,9 @@ function getComments(url)
             com.textContent = comment;
             commentsElement.appendChild(com);
         });
+    }).catch((error) => {
+        consol.log(error);
+        window.alert('deletion failed');
     });
 }
 
@@ -102,5 +105,8 @@ function changeCommentsLimit()
 function deleteComments()
 {
     const request = new Request('/delete-data', {method: 'POST'});
-    fetch(request).then(() => getComments());
+    fetch(request).then(() => getComments()).catch((error) => {
+        console.log(error);
+        window.alert('deletion failed');
+    });
 }
