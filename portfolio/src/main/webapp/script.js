@@ -12,28 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Adds a random greeting to the page.
- */
-function addRandomGreeting() {
-  const greetings =
-      ['i like pizza', 'i have 3 siblings', 'i live in jerusalem', 'my fav color is pink'];
-
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
-
-  // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
-}
-
-/**
-*show the next picture on the screen
- */
- //ask for static variable because we heard that globalis not good
 const counterObj = {
     picturesIndex: 0
-}
+};
 const allPictures = ['20060919215839_DSC_6806.JPG', '20060919222117_DSC_6821.JPG', '20170204094939_IMG_1368.JPG'
 , '20170209104355_IMG_1531.JPG', '20170213143558_IMG_1735.JPG', '20170222180214_IMG_1834.JPG', '20170302135232_IMG_2101.JPG',
 'IMG_20170115_202802_153.jpg'];
@@ -49,8 +30,8 @@ function changePictureInDom()
 }
 
 /** 
-moves the pictureIndex forward
- */
+* moves the pictureIndex forward
+*/
 function nextPicture()
 {
     counterObj.picturesIndex++;
@@ -60,7 +41,7 @@ function nextPicture()
 
 /**
 * moves the pictureIndex backwards
- */
+*/
 function previousPicture()
 {
     counterObj.picturesIndex--;
@@ -82,33 +63,44 @@ function displayHakaFrame()
     hakaVideoButton.style.visibility = 'hidden';
 }
 
-
-
-//week 3 -server try
-// function randomTrack()
-// {
-//     fetch('/data').then(response => response.text()).then((text)=> {
-//         document.getElementById('randomTrack').textContent = text;
-//     });
-// }
-
-// function showTracks()
-// {
-//     fetch('/data').then(response => response.json()).then(tracks => 
-//     {
-//         console.log(tracks);
-//         document.getElementById('randomTrack').textContent = tracks;
-
-//     })
-// }
-
-function getComments()
+/**
+* requests for the recommendations from db and display it on the dom
+ */
+function getComments(url)
 {
-    fetch('/data').then(response => response.json()).then(comments => {
+    //default limit is 15
+    if (url === undefined) url = "/data?limit=15";
+    fetch(url).then(response => response.json()).then(comments => {
+        let commentsElement = document.getElementById('comments')
+
+        //clear previus comments
+        commentsElement.innerHTML = '';
+
         comments.forEach(comment=> {
             let com = document.createElement('li');
             com.textContent = comment;
-            document.getElementById('comments').appendChild(com);
-        })
+            commentsElement.appendChild(com);
+        });
     });
+}
+
+/**
+* change the amout of comments display in the DOM addording to a user input
+ */
+function changeCommentsLimit()
+{
+    let limit = document.getElementById('quantity').value;
+    let url = '/data?limit=' + limit;
+    console.log(url);
+    getComments(url);
+    
+}
+
+/**
+* deletes all comments using post reruest
+ */
+function deleteComments()
+{
+    const request = new Request('/delete-data', {method: 'POST'});
+    fetch(request).then(() => getComments());
 }

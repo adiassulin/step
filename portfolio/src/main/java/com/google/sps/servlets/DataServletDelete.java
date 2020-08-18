@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
 package com.google.sps.servlets;
 import com.google.gson.Gson;
 
@@ -33,49 +34,33 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*; 
 
-/** Servlet that returnd recommendations data*/
-@WebServlet("/data")
-public class DataServlet extends HttpServlet {
- 
-  /**
-  * do request which return as response all the recommendations ap to given limit
-  */
+
+/** Servlet that deletes all the recommendations data */
+@WebServlet("/delete-data")
+public class DataServletDelete extends HttpServlet {
+
+
+
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-      int limit = Integer.parseInt(request.getParameter("limit"));
-      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-      Query query = new Query("Task");
-      PreparedQuery results = datastore.prepare(query);
-
-      ArrayList<String> comments = new ArrayList<>();
-      for (Entity comment : results.asList(FetchOptions.Builder.withLimit(limit))) {
-          comments.add((String) comment.getProperty("comment"));
-      }
-
-      response.setContentType("application/json");
-      String json = new Gson().toJson(comments);
-      response.getWriter().println(json);
-  }
-
-
   /**
-  * post request which get as a paremeter a recommendation and adds it to the database.
+  * post request that deletes all the entities from kind Task in the database
   */
-   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
  {
-    String comment = request.getParameter("text-input");
-  
-    Entity commentEntity = new Entity("Task");
-    commentEntity.setProperty("comment", comment);
+     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+     Query query = new Query("Task");
+     PreparedQuery results = datastore.prepare(query);
+     List<Entity> comments = new ArrayList<>();
+     
+     for (Entity en: results.asIterable())
+     {
+        datastore.delete(en.getKey());
 
-    DatastoreService datadtore = DatastoreServiceFactory.getDatastoreService();
-    datadtore.put(commentEntity);
+     }
 
     // Redirect back to the HTML page.
     response.sendRedirect("/index.html");
-
-
   }
+
 
 }
