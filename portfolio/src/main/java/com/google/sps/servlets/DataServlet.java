@@ -37,14 +37,17 @@ import java.util.*;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
  
+   String LIMIT_PARAM = "limit";
+   String TASK_QUERY = "Task";
+
   /**
   * returns as response all the recommendations ap to given limit.
   */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-      int limit = Integer.parseInt(request.getParameter("limit"));
+      int limit = Integer.parseInt(request.getParameter(LIMIT_PARAM));
       DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-      Query query = new Query("Task");
+      Query query = new Query(TASK_QUERY);
       PreparedQuery results = datastore.prepare(query);
 
       ArrayList<String> comments = new ArrayList<>();
