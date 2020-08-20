@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.*; 
 
 
-/** Servlet that deletes all the recommendations data */
+/** deletes all the recommendations data. */
 @WebServlet("/delete-data")
 public class DataServletDelete extends HttpServlet {
 
@@ -43,7 +43,7 @@ public class DataServletDelete extends HttpServlet {
 
   @Override
   /**
-  * post request that deletes all the entities from kind Task in the database
+  * deletes all the entities from kind Task in the database.
   */
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
  {
@@ -55,7 +55,6 @@ public class DataServletDelete extends HttpServlet {
      for (Entity en: results.asIterable())
      {
         datastore.delete(en.getKey());
-
      }
 
     // Redirect back to the HTML page.

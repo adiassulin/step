@@ -33,12 +33,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*; 
 
-/** Servlet that returnd recommendations data*/
+/** Servlet that returns recommendations data*/
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
  
   /**
-  * do request which return as response all the recommendations ap to given limit
+  * returns as response all the recommendations ap to given limit.
   */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -59,7 +59,7 @@ public class DataServlet extends HttpServlet {
 
 
   /**
-  * post request which get as a paremeter a recommendation and adds it to the database.
+  * gets as a paremeter a recommendation and adds it to the database.
   */
    @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
@@ -69,13 +69,11 @@ public class DataServlet extends HttpServlet {
     Entity commentEntity = new Entity("Task");
     commentEntity.setProperty("comment", comment);
 
-    DatastoreService datadtore = DatastoreServiceFactory.getDatastoreService();
-    datadtore.put(commentEntity);
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(commentEntity);
 
     // Redirect back to the HTML page.
     response.sendRedirect("/index.html");
-
-
   }
 
 }
