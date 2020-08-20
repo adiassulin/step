@@ -17,7 +17,9 @@
     <meta charset="UTF-8">
     <title>My Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="script.js"></script>
+    <script src="charts_script.js"></script>
   </head>
   <body onload="getComments()">
     <div id="margin">
@@ -84,6 +86,14 @@
             <a href="/wanaka.html" target="attractions" class="pagination">Wanaka</a>
             <a href="/queenstown.html" target="attractions" class="pagination">Queenstown</a>
           </div>
+        </div>
+        <br/>
+        <div>
+          <h2>Ethnic Groups</h2>
+          <p>Contemporary New Zealand has a majority of people of European origin, a significant minority of <a href="https://www.britannica.com/topic/Maori" target="_blank">Maori</a>, 
+              and smaller numbers of people from Pacific islands and Asia. In the early 21st century, 
+              Asians were the fastest-growing demographic group.</p>
+          <div id="nz-chart-container"></div>
         </div>
     </div>
   </body>

@@ -124,3 +124,7 @@ li {
 .pagination:active {
   background-color: #FF69B4;
 }
+
+#nz-chart-container {
+  margin-left:35%;
+}
