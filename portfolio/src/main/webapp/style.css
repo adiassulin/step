@@ -84,21 +84,21 @@ li {
 }
 
 #attractions {
-    width: 80%;
-    height: 500px;
+  width: 80%;
+  height: 500px;
 }
 
 .row {
-    display: table;
-    width: 100%;
-    table-layout: fixed;
-    border-spacing: 10px;
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  border-spacing: 10px;
 }
 
 .column {
-    display: table-cell;
-    padding: 5px;
-    background-color: lightskyblue;
+  display: table-cell;
+  padding: 5px;
+  background-color: lightskyblue;
 }
 
 .bar {
@@ -114,13 +114,13 @@ li {
 }
 
 .pagination:hover:not(.focus) {
-    background-color: pink;
+  background-color: pink;
 }
 
 .pagination:focus {
-    background-color: #FF69B4;
+  background-color: #FF69B4;
 }
 
 .pagination:active {
-    background-color: #FF69B4;
+  background-color: #FF69B4;
 }
