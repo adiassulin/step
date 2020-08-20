@@ -132,3 +132,9 @@ li {
 .chartspara {
   font-size: 20;
 }
+
+#better-isl-col {
+  display: table-cell;
+  padding: 5px;
+  vertical-align: middle;
+}

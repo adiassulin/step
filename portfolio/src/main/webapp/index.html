@@ -88,7 +88,22 @@
           </div>
         </div>
         <br/>
-      
+        <div class="row">
+          <div id="better-isl-col">
+            <h1> NORTH island VS. SOUTH island </h1>
+            <h3>New Zealand's South Island is larger than the North Island and generally considered more beautiful. It also has gorgeous coastline, but it is best known for the many mountains and fiords that define its inland<br/>
+            The North Island is known for its gorgeous coastline and geothermal hotspots. You’ll find incredible beaches in Northland. The central region of the island around Rotorua is known for the hot springs and bubbling mud pools that come with intense geothermal activity.</h3>
+            <h2>If you have been in NZ, tell us- What is the better island ? </h2>
+          </div>
+          <form class="column" action="/favorite-city-data" method="POST">
+            <select name="island">
+              <option value="North">North</option>
+              <option value="South">South</option>
+            </select>
+            <button>Submit</button>
+          </form>
+          <div class="column" id="fav-island-container"></div>
+        </div>
         <h2>Ethnic Groups</h2>
         <p>Contemporary New Zealand has a majority of people of European origin, a significant minority of <a href="https://www.britannica.com/topic/Maori" target="_blank">Maori</a>, 
             and smaller numbers of people from Pacific islands and Asia. In the early 21st century, 

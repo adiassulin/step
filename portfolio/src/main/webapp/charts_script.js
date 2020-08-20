@@ -23,8 +23,32 @@ function drawChart() {
   drawEthnicGroups(); 
   drawSheepPeople();
   drawExport();
+  drawBetterIsland();
 
 
+}
+
+/** Fetches favorite island data and uses it to create a chart. */
+function drawBetterIsland() {
+  fetch('/favorite-city-data').then((response) => response.json())
+  .then((favIsland) => {
+    const data = new google.visualization.DataTable();
+    data.addColumn('string', 'Island');
+    data.addColumn('number', 'Votes');
+    Object.keys(favIsland).forEach((island) => {
+      data.addRow([island, favIsland[island]]);
+    });
+
+    const options = {
+      'title': 'Favorite Island',
+      'width':600,
+      'height':500
+    };
+
+    const chart = new google.visualization.ColumnChart(
+        document.getElementById('fav-island-container'));
+    chart.draw(data, options);
+  });
 }
 
 /** Creates a ethnic groups pie charts. */
