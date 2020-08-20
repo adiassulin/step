@@ -14,10 +14,21 @@
 
 
 google.charts.load('current', {'packages':['corechart']});
+google.charts.load('current', {'packages':['bar']});
+google.charts.load('current', {'packages':['geochart'],'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'});
 google.charts.setOnLoadCallback(drawChart);
 
-/** Creates a chart and adds it to the page. */
+/** Creates charts and adds it to the page. */
 function drawChart() {
+  drawEthnicGroups(); 
+  drawSheepPeople();
+  drawExport();
+
+
+}
+
+/** Creates a ethnic groups pie charts. */
+function drawEthnicGroups() {
   const data = new google.visualization.DataTable();
   data.addColumn('string', 'Group');
   data.addColumn('number', 'Precentage');
@@ -39,5 +50,69 @@ function drawChart() {
 
   const chart = new google.visualization.PieChart(
       document.getElementById('nz-chart-container'));
+  chart.draw(data, options);
+}
+
+function drawSheepPeople() {
+  const data = new google.visualization.arrayToDataTable([
+          ['Group', 'Count (per million)'],
+          ['Sheeps', 29.5],
+          ['people', 4.6]]);
+
+  const options = {
+    'title': 'sheeps VS. people (2015)',
+    'height':600,
+    'width':700
+  };
+
+  const chart = new google.charts.Bar(document.getElementById('sheep-people-container'));
+  chart.draw(data, google.charts.Bar.convertOptions(options));
+}
+
+function drawExport() {
+  const data = google.visualization.arrayToDataTable([
+          ['Country', 'Popularity'],
+          ['China', 23],
+          ['Australia', 16.4],
+          ['United States', 11.4],
+          ['Japan', 5.3],
+          ['Belgium', 10.6],
+          ['Bulgaria', 10.6],
+          ['Czechia', 10.6],
+          ['Denmark', 10.6],
+          ['Germany', 10.6],
+          ['Estonia', 10.6],
+          ['Ireland', 10.6],
+          ['Greece', 10.6],
+          ['Spain', 10.6],
+          ['France', 10.6],
+          ['Croatia', 10.6],
+          ['Italy', 10.6],
+          ['Cyprus', 10.6],
+          ['Latvia', 10.6],
+          ['Lithuania', 10.6],
+          ['Luxembourg', 10.6],
+          ['Hungary', 10.6],
+          ['Malta', 10.6],
+          ['Netherlands', 10.6],
+          ['Austria', 10.6],
+          ['Poland', 10.6],
+          ['Portugal', 10.6],
+          ['Romania', 10.6],
+          ['Slovenia', 10.6],
+          ['Slovakia', 10.6],
+          ['Finland', 10.6],
+          ['Sweden', 10.6]
+        ]);
+
+  const options = {
+    'title': 'main export partners',
+    'height':600,
+    'width':700,
+    'colors': 'blue',
+  };
+
+  const chart = new google.visualization.GeoChart(
+      document.getElementById('export-container'));
   chart.draw(data, options);
 }
