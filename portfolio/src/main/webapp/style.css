@@ -82,3 +82,45 @@ li {
 #recomendations {
   width: 40%;
 }
+
+#attractions {
+  width: 80%;
+  height: 500px;
+}
+
+.row {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  border-spacing: 10px;
+}
+
+.column {
+  display: table-cell;
+  padding: 5px;
+  background-color: lightskyblue;
+}
+
+.bar {
+  display: inline-block;
+}
+
+.bar, .pagination {
+  color: black;
+  padding: 8px 16px;
+  text-decoration: none;
+  border: 1px solid #ddd;
+  font-size: 22px;
+}
+
+.pagination:hover:not(.focus) {
+  background-color: pink;
+}
+
+.pagination:focus {
+  background-color: #FF69B4;
+}
+
+.pagination:active {
+  background-color: #FF69B4;
+}

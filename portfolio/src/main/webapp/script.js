@@ -15,50 +15,50 @@
 const COUNTER_OBJ = {
     picturesIndex: 0
 };
-const ALL_PICTURES = ['20060919215839_DSC_6806.JPG', '20060919222117_DSC_6821.JPG', '20170204094939_IMG_1368.JPG'
+
+const ALL_PICS = ['20060919215839_DSC_6806.JPG', '20060919222117_DSC_6821.JPG', '20170204094939_IMG_1368.JPG'
 , '20170209104355_IMG_1531.JPG', '20170213143558_IMG_1735.JPG', '20170222180214_IMG_1834.JPG', '20170302135232_IMG_2101.JPG',
 'IMG_20170115_202802_153.jpg'];
 
-const IMG_CONTAINER_ID = 'img-container';
+const IMG_CONTAINER = 'img-container';
 
-const IMG_DIR_PATH = '/images/';
+const IMG_PATH = '/images/';
 
-const HAKA_IFRAME_ID = 'hakaIframe';
+const HAKA_IFRAME = 'hakaIframe';
 
-const HAKA_VB_ID = 'hakaVideoButton';
+const STYLE_VISIBLE = 'visible';
 
-const CSS_STYLE_VISIBLE = 'visible';
+const STYLE_HIDDEN = 'hidden';
 
-const CSS_STYLE_HIDDEN = 'hidden';
+const HAKA_VIDEO_BTN_ID = 'hakaVideoButton';
 
-const DEF_LIMIT_URL = '/data?limit=15';
+const COMMENTS_ELEM_ID = 'comments';
 
-const PREF_LIMIT_URL = '/data?limit='
+const QUANTITY_ELEM_ID = 'quantity';
 
-const COM_CONTAINER_ID = 'comments';
+const DEF_URL_LIMIT = '/data?limit=15';
 
-const QUAN_CONTAINER_ID = 'quantity';
+const PREF_URL_LIMIT = '/data?limit=';
 
-const EMPTY = '';
+const EMPTY_STR = '';
 
-const LIST_ITEM_ELEM = 'li';
+const LI_ELEM = 'li';
 
-const DEL_ERR_MSG = 'deletion failed';
+const DELET_FAIL_MSG = 'deletion failed';
 
-const DEL_SERVLRT = '/delete-data';
+const DELETE_DATA_SERVLET = '/delete-data';
 
-const POST_REQ = 'POST';
-
+const POSR_REQUEST = 'POST';
 
 
 /** 
 * changes the picture in the dom gallery according to pictureIndex variable.
- */
+*/
 function changePictureInDom()
 {
-    const pic = ALL_PICTURES[COUNTER_OBJ.picturesIndex];
-    const imgContainer = document.getElementById(IMG_CONTAINER_ID);
-    imgContainer.src = IMG_DIR_PATH + pic;
+    const pic = ALL_PICS[COUNTER_OBJ.picturesIndex];
+    const imgContainer = document.getElementById(IMG_CONTAINER);
+    imgContainer.src = IMG_PATH + pic;
 }
 
 /** 
@@ -67,7 +67,7 @@ function changePictureInDom()
 function nextPicture()
 {
     COUNTER_OBJ.picturesIndex++;
-    COUNTER_OBJ.picturesIndex = COUNTER_OBJ.picturesIndex === ALL_PICTURES.length? 0 : COUNTER_OBJ.picturesIndex;   
+    COUNTER_OBJ.picturesIndex = COUNTER_OBJ.picturesIndex === ALL_PICS.length? 0 : COUNTER_OBJ.picturesIndex;   
     changePictureInDom();
 }
 
@@ -77,7 +77,7 @@ function nextPicture()
 function previousPicture()
 {
     COUNTER_OBJ.picturesIndex--;
-    COUNTER_OBJ.picturesIndex = COUNTER_OBJ.picturesIndex < 0 ? ALL_PICTURES.length - 1 : COUNTER_OBJ.picturesIndex;   
+    COUNTER_OBJ.picturesIndex = COUNTER_OBJ.picturesIndex < 0 ? ALL_PICS.length - 1 : COUNTER_OBJ.picturesIndex;   
     changePictureInDom();
 }
 
@@ -86,36 +86,36 @@ function previousPicture()
  */
 function displayHakaFrame()
 {
-    const hakaIframe = document.getElementById(HAKA_IFRAME_ID);
+    const hakaIframe = document.getElementById(HAKA_IFRAME);
     hakaIframe.height = 345;
     hakaIframe.width = 420;
-    hakaIframe.style.visibility = CSS_STYLE_VISIBLE;
+    hakaIframe.style.visibility = STYLE_VISIBLE;
 
-    const hakaVideoButton = document.getElementById(HAKA_VB_ID);
-    hakaVideoButton.style.visibility = CSS_STYLE_HIDDEN;
+    const hakaVideoButton = document.getElementById(HAKA_VIDEO_BTN_ID)
+    hakaVideoButton.style.visibility = STYLE_HIDDEN;
 }
 
 /**
-* requests for the recommendations from db and displays it on the dom.
+* requests for the recommendations from db and display it on the dom.
  */
 function getComments(url)
 {
     //default limit is 15
-    if (url === undefined) url = DEF_LIMIT_URL;
+    if (url === undefined) url = DEF_URL_LIMIT;
     fetch(url).then((response) => response.json()).then((comments) => {
-        const commentsElement = document.getElementById(COM_CONTAINER_ID);
+        const commentsElement = document.getElementById(COMMENTS_ELEM_ID)
 
         //clear previus comments
-        commentsElement.innerHTML = EMPTY;
+        commentsElement.innerHTML = EMPTY_STR;
 
-        comments.forEach(comment=> {
-            const com = document.createElement(LIST_ITEM_ELEM);
+        comments.forEach((comment) => {
+            const com = document.createElement(LI_ELEM);
             com.textContent = comment;
             commentsElement.appendChild(com);
         });
     }).catch((error) => {
         consol.log(error);
-        window.alert(DEL_ERR_MSG);
+        window.alert(DELET_FAIL_MSG);
     });
 }
 
@@ -124,10 +124,10 @@ function getComments(url)
  */
 function changeCommentsLimit()
 {
-    const limit = document.getElementById(QUAN_CONTAINER_ID).value;
-    const url = PREF_LIMIT_URL + limit;
+    const limit = document.getElementById(QUANTITY_ELEM_ID).value;
+    const url = PREF_URL_LIMIT + limit;
     console.log(url);
-    getComments(url);
+    getComments(url);  
 }
 
 /**
@@ -135,9 +135,9 @@ function changeCommentsLimit()
  */
 function deleteComments()
 {
-    const request = new Request(DEL_SERVLRT, {method: POST_REQ});
+    const request = new Request(DELETE_DATA_SERVLET, {method: POSR_REQUEST});
     fetch(request).then(() => getComments()).catch((error) => {
         console.log(error);
-        window.alert(DEL_ERR_MSG);
+        window.alert(DELET_FAIL_MSG);
     });
 }
