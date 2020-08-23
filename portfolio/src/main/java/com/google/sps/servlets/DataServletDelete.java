@@ -55,7 +55,6 @@ public class DataServletDelete extends HttpServlet {
      for (Entity en: results.asIterable())
      {
         datastore.delete(en.getKey());
-
      }
 
     // Redirect back to the HTML page.

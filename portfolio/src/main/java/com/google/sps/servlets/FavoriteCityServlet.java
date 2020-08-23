@@ -37,10 +37,17 @@ import java.util.*;
 @WebServlet("/favorite-city-data")
 public class FavoriteCityServlet extends HttpServlet {
 
-  private LinkedHashMap<String, Integer> favCity = new LinkedHashMap<>();
-
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    Query query = new Query("Survay");
+    PreparedQuery results = datastore.prepare(query);
+
+    LinkedHashMap<String, Integer> favCity = new LinkedHashMap<>();
+    for (Entity island : results.asIterable()) {
+        favCity.put((String) island.getProperty("name"), (int) island.getProperty("score"));
+    }
+
     response.setContentType("application/json");
     Gson gson = new Gson();
     String json = gson.toJson(favCity);
@@ -49,10 +56,29 @@ public class FavoriteCityServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String city = request.getParameter("island");
-    int currentVotes = favCity.containsKey(city) ? favCity.get(city) : 0;
-    favCity.put(city, currentVotes + 1);
+    String isle = request.getParameter("island");
+    boolean changed = false;
 
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    Query query = new Query("Survay");
+    PreparedQuery results = datastore.prepare(query);
+
+    for (Entity island : results.asIterable()) {
+      if (((String)island.getProperty("name")).equals(isle))
+      {
+          changed = true;
+          island.setProperty("score", (int)island.getProperty("score") + 1);
+          datastore.put(island);
+      }
+    }
+
+    if (!changed)
+    {
+      Entity entity = new Entity("Survay");
+      entity.setProperty("name", isle);
+      entity.setProperty("score", 1);
+    }
+    //redirect
     response.sendRedirect("/index.html");
   }
 }

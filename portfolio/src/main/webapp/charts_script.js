@@ -24,8 +24,6 @@ function drawChart() {
   drawSheepPeople();
   drawExport();
   drawBetterIsland();
-
-
 }
 
 /** Fetches favorite island data and uses it to create a chart. */
