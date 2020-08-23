@@ -52,7 +52,7 @@ public class FavoriteCityServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    Query query = new Query(SURVEY_ENTITY;
+    Query query = new Query(SURVEY_ENTITY);
     PreparedQuery results = datastore.prepare(query);
 
     LinkedHashMap<String, Long> favCity = new LinkedHashMap<>();
