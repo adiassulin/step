@@ -37,18 +37,30 @@ import java.util.*;
 @WebServlet("/favorite-city-data")
 public class FavoriteCityServlet extends HttpServlet {
 
+    public static final String SURVEY_ENTITY = "Survey";
+
+    public static final String NAME_PROPERTY = "name";
+
+    public static final String SCORE_PROPERTY = "score";
+
+    public static final String JSON_TYPE_RESPONSE = "application/json";
+
+    public static final String ISLAND_PARAM = "island";
+
+    public static final String INDEX_HTML = "/index.html";
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    Query query = new Query("Survay");
+    Query query = new Query(SURVEY_ENTITY;
     PreparedQuery results = datastore.prepare(query);
 
-    LinkedHashMap<String, Integer> favCity = new LinkedHashMap<>();
+    LinkedHashMap<String, Long> favCity = new LinkedHashMap<>();
     for (Entity island : results.asIterable()) {
-        favCity.put((String) island.getProperty("name"), (int) island.getProperty("score"));
+        favCity.put((String) island.getProperty(NAME_PROPERTY), (long)(island.getProperty(SCORE_PROPERTY)));
     }
 
-    response.setContentType("application/json");
+    response.setContentType(JSON_TYPE_RESPONSE);
     Gson gson = new Gson();
     String json = gson.toJson(favCity);
     response.getWriter().println(json);
@@ -56,30 +68,31 @@ public class FavoriteCityServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String isle = request.getParameter("island");
+    String isle = request.getParameter(ISLAND_PARAM);
     boolean changed = false;
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    Query query = new Query("Survay");
+    Query query = new Query(SURVEY_ENTITY);
     PreparedQuery results = datastore.prepare(query);
 
     for (Entity island : results.asIterable()) {
-      if (((String)island.getProperty("name")).equals(isle))
+      if (((String)island.getProperty(NAME_PROPERTY)).equals(isle))
       {
           changed = true;
-          island.setProperty("score", (int)island.getProperty("score") + 1);
+          island.setProperty(SCORE_PROPERTY, (long)island.getProperty(SCORE_PROPERTY) + 1);
           datastore.put(island);
       }
     }
 
     if (!changed)
     {
-      Entity entity = new Entity("Survay");
-      entity.setProperty("name", isle);
-      entity.setProperty("score", 1);
+      Entity entity = new Entity(SURVEY_ENTITY);
+      entity.setProperty(NAME_PROPERTY, isle);
+      entity.setProperty(SCORE_PROPERTY, 1);
+      datastore.put(entity);
     }
     //redirect
-    response.sendRedirect("/index.html");
+    response.sendRedirect(INDEX_HTML);
   }
 }
 

@@ -130,11 +130,15 @@ li {
 }
 
 .chartspara {
-  font-size: 20;
+  font-size: 25px;
 }
 
 #better-isl-col {
   display: table-cell;
   padding: 5px;
+  vertical-align: middle;
+}
+
+#better-island-form {
   vertical-align: middle;
 }
