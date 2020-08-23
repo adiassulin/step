@@ -33,49 +33,57 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*; 
 
-/** Servlet that returnd recommendations data*/
+/** returns recommendations data.*/
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
+
+    public static final String LIMIT_PARAM = "limit";
+
+    public static final String TASK_QUERY = "Task";
+
+    public static final String COMMENT_PARAM = "comment";
+
+    public static final String RESPONSE_JSON = "application/json";
+
+    public static final String RECOMMAND_PARAM = "text-input";
+
+    public static final String INDEX_HTML = "/index.html";
  
   /**
-  * do request which return as response all the recommendations ap to given limit
+  * returns as response all the recommendations ap to given limit.
   */
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-      int limit = Integer.parseInt(request.getParameter("limit"));
+      int limit = Integer.parseInt(request.getParameter(LIMIT_PARAM));
       DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-      Query query = new Query("Task");
+      Query query = new Query(TASK_QUERY);
       PreparedQuery results = datastore.prepare(query);
 
       ArrayList<String> comments = new ArrayList<>();
       for (Entity comment : results.asList(FetchOptions.Builder.withLimit(limit))) {
-          comments.add((String) comment.getProperty("comment"));
+          comments.add((String) comment.getProperty(COMMENT_PARAM));
       }
 
-      response.setContentType("application/json");
+      response.setContentType(RESPONSE_JSON);
       String json = new Gson().toJson(comments);
       response.getWriter().println(json);
   }
 
-
   /**
-  * post request which get as a paremeter a recommendation and adds it to the database.
+  * gets as a paremeter a recommendation and adds it to the database.
   */
    @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
  {
-    String comment = request.getParameter("text-input");
+    String comment = request.getParameter(RECOMMAND_PARAM);
   
-    Entity commentEntity = new Entity("Task");
-    commentEntity.setProperty("comment", comment);
+    Entity commentEntity = new Entity(TASK_QUERY);
+    commentEntity.setProperty(COMMENT_PARAM, comment);
 
-    DatastoreService datadtore = DatastoreServiceFactory.getDatastoreService();
-    datadtore.put(commentEntity);
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(commentEntity);
 
     // Redirect back to the HTML page.
-    response.sendRedirect("/index.html");
-
-
+    response.sendRedirect(INDEX_HTML);
   }
-
 }

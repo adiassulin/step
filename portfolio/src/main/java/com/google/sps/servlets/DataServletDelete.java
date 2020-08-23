@@ -35,32 +35,31 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.*; 
 
 
-/** Servlet that deletes all the recommendations data */
+/** Servlet that deletes all the recommendations data. */
 @WebServlet("/delete-data")
 public class DataServletDelete extends HttpServlet {
 
+  public static final String TASK_QUERY = "Task";
 
+  public static final String INDEX_HTML = "/index.html";
 
   @Override
   /**
-  * post request that deletes all the entities from kind Task in the database
+  * deletes all the entities from kind Task in the database.
   */
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
  {
      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-     Query query = new Query("Task");
+     Query query = new Query(TASK_QUERY);
      PreparedQuery results = datastore.prepare(query);
      List<Entity> comments = new ArrayList<>();
      
      for (Entity en: results.asIterable())
      {
         datastore.delete(en.getKey());
-
      }
 
     // Redirect back to the HTML page.
-    response.sendRedirect("/index.html");
+    response.sendRedirect(INDEX_HTML);
   }
-
-
 }
