@@ -12,101 +12,132 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-const counterObj = {
+const COUNTER_OBJ = {
     picturesIndex: 0
 };
-const allPictures = ['20060919215839_DSC_6806.JPG', '20060919222117_DSC_6821.JPG', '20170204094939_IMG_1368.JPG'
+
+const ALL_PICS = ['20060919215839_DSC_6806.JPG', '20060919222117_DSC_6821.JPG', '20170204094939_IMG_1368.JPG'
 , '20170209104355_IMG_1531.JPG', '20170213143558_IMG_1735.JPG', '20170222180214_IMG_1834.JPG', '20170302135232_IMG_2101.JPG',
 'IMG_20170115_202802_153.jpg'];
 
+const IMG_CONTAINER = 'img-container';
+
+const IMG_PATH = '/images/';
+
+const HAKA_IFRAME = 'hakaIframe';
+
+const STYLE_VISIBLE = 'visible';
+
+const STYLE_HIDDEN = 'hidden';
+
+const HAKA_VIDEO_BTN_ID = 'hakaVideoButton';
+
+const COMMENTS_ELEM_ID = 'comments';
+
+const QUANTITY_ELEM_ID = 'quantity';
+
+const DEF_URL_LIMIT = '/data?limit=15';
+
+const PREF_URL_LIMIT = '/data?limit=';
+
+const EMPTY_STR = '';
+
+const LI_ELEM = 'li';
+
+const DELET_FAIL_MSG = 'deletion failed';
+
+const DELETE_DATA_SERVLET = '/delete-data';
+
+const POSR_REQUEST = 'POST';
+
+
 /** 
-* change the picture in the dom gallery according to pictureIndex variable
- */
+* changes the picture in the dom gallery according to pictureIndex variable.
+*/
 function changePictureInDom()
 {
-    const pic = allPictures[counterObj.picturesIndex];
-    const imgContainer = document.getElementById('img-container');
-    imgContainer.src = '/images/' + pic;
+    const pic = ALL_PICS[COUNTER_OBJ.picturesIndex];
+    const imgContainer = document.getElementById(IMG_CONTAINER);
+    imgContainer.src = IMG_PATH + pic;
 }
 
 /** 
-* moves the pictureIndex forward
+* moves the pictureIndex forward.
 */
 function nextPicture()
 {
-    counterObj.picturesIndex++;
-    counterObj.picturesIndex = counterObj.picturesIndex === allPictures.length? 0 : counterObj.picturesIndex;   
+    COUNTER_OBJ.picturesIndex++;
+    COUNTER_OBJ.picturesIndex = COUNTER_OBJ.picturesIndex === ALL_PICS.length? 0 : COUNTER_OBJ.picturesIndex;   
     changePictureInDom();
 }
 
 /**
-* moves the pictureIndex backwards
+* moves the pictureIndex backwards.
 */
 function previousPicture()
 {
-    counterObj.picturesIndex--;
-    counterObj.picturesIndex = counterObj.picturesIndex < 0 ? allPictures.length - 1 : counterObj.picturesIndex;   
+    COUNTER_OBJ.picturesIndex--;
+    COUNTER_OBJ.picturesIndex = COUNTER_OBJ.picturesIndex < 0 ? ALL_PICS.length - 1 : COUNTER_OBJ.picturesIndex;   
     changePictureInDom();
 }
 
 /**
-* displays the haka videwin the iframe
+* displays the haka videwin the iframe.
  */
 function displayHakaFrame()
 {
-    const hakaIframe = document.getElementById('hakaIframe');
+    const hakaIframe = document.getElementById(HAKA_IFRAME);
     hakaIframe.height = 345;
     hakaIframe.width = 420;
-    hakaIframe.style.visibility = 'visible';
+    hakaIframe.style.visibility = STYLE_VISIBLE;
 
-    const hakaVideoButton = document.getElementById('hakaVideoButton')
-    hakaVideoButton.style.visibility = 'hidden';
+    const hakaVideoButton = document.getElementById(HAKA_VIDEO_BTN_ID)
+    hakaVideoButton.style.visibility = STYLE_HIDDEN;
 }
 
 /**
-* requests for the recommendations from db and display it on the dom
+* requests for the recommendations from db and display it on the dom.
  */
 function getComments(url)
 {
     //default limit is 15
-    if (url === undefined) url = "/data?limit=15";
-    fetch(url).then(response => response.json()).then(comments => {
-        let commentsElement = document.getElementById('comments')
+    if (url === undefined) url = DEF_URL_LIMIT;
+    fetch(url).then((response) => response.json()).then((comments) => {
+        const commentsElement = document.getElementById(COMMENTS_ELEM_ID)
 
         //clear previus comments
-        commentsElement.innerHTML = '';
+        commentsElement.innerHTML = EMPTY_STR;
 
-        comments.forEach(comment=> {
-            let com = document.createElement('li');
+        comments.forEach((comment) => {
+            const com = document.createElement(LI_ELEM);
             com.textContent = comment;
             commentsElement.appendChild(com);
         });
     }).catch((error) => {
         consol.log(error);
-        window.alert('deletion failed');
+        window.alert(DELET_FAIL_MSG);
     });
 }
 
 /**
-* change the amout of comments display in the DOM addording to a user input
+* changes the amout of comments display in the DOM addording to a user input.
  */
 function changeCommentsLimit()
 {
-    let limit = document.getElementById('quantity').value;
-    let url = '/data?limit=' + limit;
+    const limit = document.getElementById(QUANTITY_ELEM_ID).value;
+    const url = PREF_URL_LIMIT + limit;
     console.log(url);
-    getComments(url);
-    
+    getComments(url);  
 }
 
 /**
-* deletes all comments using post reruest
+* deletes all comments using post reruest.
  */
 function deleteComments()
 {
-    const request = new Request('/delete-data', {method: 'POST'});
+    const request = new Request(DELETE_DATA_SERVLET, {method: POSR_REQUEST});
     fetch(request).then(() => getComments()).catch((error) => {
         console.log(error);
-        window.alert('deletion failed');
+        window.alert(DELET_FAIL_MSG);
     });
 }
