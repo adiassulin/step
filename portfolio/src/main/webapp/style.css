@@ -142,3 +142,8 @@ li {
 #better-island-form {
   vertical-align: middle;
 }
+
+.comment-score {
+    text-align: right;
+    margin-right:20%;
+}

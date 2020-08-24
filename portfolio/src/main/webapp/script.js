@@ -50,6 +50,17 @@ const DELETE_DATA_SERVLET = '/delete-data';
 
 const POSR_REQUEST = 'POST';
 
+const GREEN = '#008000';
+
+const LIME_GREEN = '#32CD32';
+
+const LIGHTGREEN = '#90EE90';
+
+const LIGHTRED = '#CD5C5C';
+
+const RED = '#FF0000';
+
+
 
 /** 
 * changes the picture in the dom gallery according to pictureIndex variable.
@@ -103,20 +114,35 @@ function getComments(url)
     //default limit is 15
     if (url === undefined) url = DEF_URL_LIMIT;
     fetch(url).then((response) => response.json()).then((comments) => {
-        const commentsElement = document.getElementById(COMMENTS_ELEM_ID)
+        const commentsElement = document.getElementById(COMMENTS_ELEM_ID);
 
         //clear previus comments
         commentsElement.innerHTML = EMPTY_STR;
 
-        comments.forEach((comment) => {
+        Object.keys(comments).forEach((comment) => {
+            const score = comments[comment].toFixed(3);
             const com = document.createElement(LI_ELEM);
-            com.textContent = comment;
+            const backColor = commentBackground(score);
+            com.style.backgroundColor = backColor;
+            com.innerHTML = comment;
             commentsElement.appendChild(com);
         });
     }).catch((error) => {
-        consol.log(error);
+        console.log(error);
         window.alert(DELET_FAIL_MSG);
     });
+}
+
+/**
+* returns the comment background color according to the given comment score.
+ */
+function commentBackground(score)
+{
+    if (score > 0.66) return GREEN;
+    if (score <= 0.66 && score > 0.33) return LIME_GREEN;
+    if (score <= 0.33 && score >= 0) return LIGHTGREEN;
+    if (score < 0 && score >= -0.5) return LIGHTRED;
+    else return RED;
 }
 
 /**

@@ -26,6 +26,10 @@ import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 
+import com.google.cloud.language.v1.Document;
+import com.google.cloud.language.v1.LanguageServiceClient;
+import com.google.cloud.language.v1.Sentiment;
+
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -43,6 +47,8 @@ public class DataServlet extends HttpServlet {
 
     public static final String COMMENT_PARAM = "comment";
 
+    public static final String SCORE_PARAM = "score";
+
     public static final String RESPONSE_JSON = "application/json";
 
     public static final String RECOMMAND_PARAM = "text-input";
@@ -59,9 +65,9 @@ public class DataServlet extends HttpServlet {
       Query query = new Query(TASK_QUERY);
       PreparedQuery results = datastore.prepare(query);
 
-      ArrayList<String> comments = new ArrayList<>();
+      LinkedHashMap<String, Double> comments = new LinkedHashMap<>();
       for (Entity comment : results.asList(FetchOptions.Builder.withLimit(limit))) {
-          comments.add((String) comment.getProperty(COMMENT_PARAM));
+          comments.put((String) comment.getProperty(COMMENT_PARAM), (double) comment.getProperty(SCORE_PARAM));
       }
 
       response.setContentType(RESPONSE_JSON);
@@ -76,14 +82,29 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
  {
     String comment = request.getParameter(RECOMMAND_PARAM);
+
+    float score = calcSentiment(comment);
   
     Entity commentEntity = new Entity(TASK_QUERY);
     commentEntity.setProperty(COMMENT_PARAM, comment);
+    commentEntity.setProperty(SCORE_PARAM, score);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(commentEntity);
 
     // Redirect back to the HTML page.
     response.sendRedirect(INDEX_HTML);
+  }
+
+  private float calcSentiment(String comment) throws IOException
+  {
+    Document doc =
+        Document.newBuilder().setContent(comment).setType(Document.Type.PLAIN_TEXT).build();
+    LanguageServiceClient languageService = LanguageServiceClient.create();
+    Sentiment sentiment = languageService.analyzeSentiment(doc).getDocumentSentiment();
+    float score = sentiment.getScore();
+    languageService.close();
+
+    return score;
   }
 }
