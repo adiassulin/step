@@ -17,7 +17,9 @@
     <meta charset="UTF-8">
     <title>My Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="script.js"></script>
+    <script src="charts_script.js"></script>
   </head>
   <body onload="getComments()">
     <div id="margin">
@@ -83,6 +85,40 @@
             <a href="/auckland.html" target="attractions" class="pagination">Auckland</a>
             <a href="/wanaka.html" target="attractions" class="pagination">Wanaka</a>
             <a href="/queenstown.html" target="attractions" class="pagination">Queenstown</a>
+          </div>
+        </div>
+        <br/>
+        <div class="row">
+          <div id="better-isl-col">
+            <h1> NORTH island VS. SOUTH island </h1>
+            <h3>New Zealand's South Island is larger than the North Island and generally considered more beautiful. It also has gorgeous coastline, but it is best known for the many mountains and fiords that define its inland<br/>
+            The North Island is known for its gorgeous coastline and geothermal hotspots. You’ll find incredible beaches in Northland. The central region of the island around Rotorua is known for the hot springs and bubbling mud pools that come with intense geothermal activity.</h3>
+          </div>
+          <form id="better-island-form" class="column" action="/favorite-city-data" method="POST">
+            <h2>If you have been in NZ, tell us- What is the better island ? </h2>
+            <br/>
+            <select name="island">
+              <option value="North">North</option>
+              <option value="South">South</option>
+            </select>
+            <button>Submit</button>
+          </form>
+          <div class="column" id="fav-island-container"></div>
+        </div>
+        <h2>Ethnic Groups</h2>
+        <p>Contemporary New Zealand has a majority of people of European origin, a significant minority of <a href="https://www.britannica.com/topic/Maori" target="_blank">Maori</a>, 
+            and smaller numbers of people from Pacific islands and Asia. In the early 21st century, 
+            Asians were the fastest-growing demographic group.</p>
+        <div id="nz-chart-container"></div>
+        <h2>more interesting data:</h2>
+        <div class="row">
+          <div class="column">
+            <p class="chartspara">New Zealand sheep numbers peaked in 1982, with a total of 70.3 million sheep. In the same year, 3.18 million people lived in New Zealand. This works out to <b>22 sheep per person.</b></p>
+            <div id="sheep-people-container"></div>
+          </div>
+          <div class="column">
+            <p class="chartspara">New Zealand main export products: Dairy products, meat, logs and wood products, fruit, machinery and equipment, wine, fish and seafood. These are the <b>main export partners</b></p>
+            <div id="export-container"></div>
           </div>
         </div>
     </div>

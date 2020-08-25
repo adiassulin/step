@@ -38,15 +38,10 @@ import java.util.*;
 public class DataServlet extends HttpServlet {
 
     public static final String LIMIT_PARAM = "limit";
-
     public static final String TASK_QUERY = "Task";
-
     public static final String COMMENT_PARAM = "comment";
-
     public static final String RESPONSE_JSON = "application/json";
-
     public static final String RECOMMAND_PARAM = "text-input";
-
     public static final String INDEX_HTML = "/index.html";
  
   /**
