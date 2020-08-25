@@ -1,9 +1,149 @@
 #content {
   margin-left: auto;
   margin-right: auto;
-  width: 650px;
+  width: 650px; 
 }
 
 #greeting-container {
   margin-top: 20px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 30px;
+  color: lightskyblue;
+}
+
+div {
+  font-family: Courier;   
+  text-align: center;
+  padding: 15px;
+  margin: 15px;
+}
+
+#intro-new-zealand {
+  font-size: 20px;
+  border: 5px outset lightskyblue; 
+  background-color: lightyellow;
+
+}
+#margin {
+  border: 5px outset lightskyblue; 
+}
+button {
+  padding: 20px;
+  background-color: lightskyblue;
+}
+
+table {
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  border-spacing: 5px lightyellow;;
+  text-align: center;
+  background-color: lightyellow;  
+}
+
+table, th, td {
+  border: 1px solid black;
+  padding: 15px;
+}
+
+td {
+  background-color: white;
+}
+
+#img-container {
+  height: 55%;
+  width: 60%;
+}
+
+#randomTrack {
+  color: lightskyblue;
+  font-size: 20px;
+  border:5px lightyellow;
+}
+
+#hakaIframe {
+  visibility: hidden;
+}
+
+ol {
+  border: 5px lightyellow;
+  padding: 5px;
+  margin-left: 20%;
+}
+
+li {
+  padding:5px;
+  text-align: left;
+}
+
+#recomendations {
+  width: 40%;
+}
+
+#attractions {
+  width: 80%;
+  height: 500px;
+}
+
+.row {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  border-spacing: 10px;
+}
+
+.column {
+  display: table-cell;
+  padding: 5px;
+  background-color: lightskyblue;
+}
+
+.bar {
+  display: inline-block;
+}
+
+.bar, .pagination {
+  color: black;
+  padding: 8px 16px;
+  text-decoration: none;
+  border: 1px solid #ddd;
+  font-size: 22px;
+}
+
+.pagination:hover:not(.focus) {
+  background-color: pink;
+}
+
+.pagination:focus {
+  background-color: #FF69B4;
+}
+
+.pagination:active {
+  background-color: #FF69B4;
+}
+
+#nz-chart-container {
+  margin-left:35%;
+}
+
+.chartspara {
+  font-size: 25px;
+}
+
+#better-isl-col {
+  display: table-cell;
+  padding: 5px;
+  vertical-align: middle;
+}
+
+#better-island-form {
+  vertical-align: middle;
+}
+
+.comment-score {
+    text-align: right;
+    margin-right:20%;
 }
