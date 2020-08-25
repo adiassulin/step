@@ -15,39 +15,23 @@
 const COUNTER_OBJ = {
     picturesIndex: 0
 };
-
 const ALL_PICS = ['20060919215839_DSC_6806.JPG', '20060919222117_DSC_6821.JPG', '20170204094939_IMG_1368.JPG'
 , '20170209104355_IMG_1531.JPG', '20170213143558_IMG_1735.JPG', '20170222180214_IMG_1834.JPG', '20170302135232_IMG_2101.JPG',
 'IMG_20170115_202802_153.jpg'];
-
 const IMG_CONTAINER = 'img-container';
-
 const IMG_PATH = '/images/';
-
 const HAKA_IFRAME = 'hakaIframe';
-
 const STYLE_VISIBLE = 'visible';
-
 const STYLE_HIDDEN = 'hidden';
-
 const HAKA_VIDEO_BTN_ID = 'hakaVideoButton';
-
 const COMMENTS_ELEM_ID = 'comments';
-
 const QUANTITY_ELEM_ID = 'quantity';
-
 const DEF_URL_LIMIT = '/data?limit=15';
-
 const PREF_URL_LIMIT = '/data?limit=';
-
 const EMPTY_STR = '';
-
 const LI_ELEM = 'li';
-
 const DELET_FAIL_MSG = 'deletion failed';
-
 const DELETE_DATA_SERVLET = '/delete-data';
-
 const POSR_REQUEST = 'POST';
 
 const GREEN = '#008000';
@@ -65,8 +49,7 @@ const RED = '#FF0000';
 /** 
 * changes the picture in the dom gallery according to pictureIndex variable.
 */
-function changePictureInDom()
-{
+function changePictureInDom() {
     const pic = ALL_PICS[COUNTER_OBJ.picturesIndex];
     const imgContainer = document.getElementById(IMG_CONTAINER);
     imgContainer.src = IMG_PATH + pic;
@@ -75,8 +58,7 @@ function changePictureInDom()
 /** 
 * moves the pictureIndex forward.
 */
-function nextPicture()
-{
+function nextPicture() {
     COUNTER_OBJ.picturesIndex++;
     COUNTER_OBJ.picturesIndex = COUNTER_OBJ.picturesIndex === ALL_PICS.length? 0 : COUNTER_OBJ.picturesIndex;   
     changePictureInDom();
@@ -85,8 +67,7 @@ function nextPicture()
 /**
 * moves the pictureIndex backwards.
 */
-function previousPicture()
-{
+function previousPicture() {
     COUNTER_OBJ.picturesIndex--;
     COUNTER_OBJ.picturesIndex = COUNTER_OBJ.picturesIndex < 0 ? ALL_PICS.length - 1 : COUNTER_OBJ.picturesIndex;   
     changePictureInDom();
@@ -95,8 +76,7 @@ function previousPicture()
 /**
 * displays the haka videwin the iframe.
  */
-function displayHakaFrame()
-{
+function displayHakaFrame() {
     const hakaIframe = document.getElementById(HAKA_IFRAME);
     hakaIframe.height = 345;
     hakaIframe.width = 420;
@@ -109,8 +89,7 @@ function displayHakaFrame()
 /**
 * requests for the recommendations from db and display it on the dom.
  */
-function getComments(url)
-{
+function getComments(url) {
     //default limit is 15
     if (url === undefined) url = DEF_URL_LIMIT;
     fetch(url).then((response) => response.json()).then((comments) => {
@@ -148,8 +127,7 @@ function commentBackground(score)
 /**
 * changes the amout of comments display in the DOM addording to a user input.
  */
-function changeCommentsLimit()
-{
+function changeCommentsLimit() {
     const limit = document.getElementById(QUANTITY_ELEM_ID).value;
     const url = PREF_URL_LIMIT + limit;
     console.log(url);
@@ -159,8 +137,7 @@ function changeCommentsLimit()
 /**
 * deletes all comments using post reruest.
  */
-function deleteComments()
-{
+function deleteComments() {
     const request = new Request(DELETE_DATA_SERVLET, {method: POSR_REQUEST});
     fetch(request).then(() => getComments()).catch((error) => {
         console.log(error);
