@@ -42,17 +42,11 @@ import java.util.*;
 public class DataServlet extends HttpServlet {
 
     public static final String LIMIT_PARAM = "limit";
-
     public static final String TASK_QUERY = "Task";
-
     public static final String COMMENT_PARAM = "comment";
-
     public static final String SCORE_PARAM = "score";
-
     public static final String RESPONSE_JSON = "application/json";
-
     public static final String RECOMMAND_PARAM = "text-input";
-
     public static final String INDEX_HTML = "/index.html";
  
   /**
@@ -79,8 +73,7 @@ public class DataServlet extends HttpServlet {
   * gets as a paremeter a recommendation and adds it to the database.
   */
    @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
- {
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String comment = request.getParameter(RECOMMAND_PARAM);
 
     float score = calcSentiment(comment);
@@ -96,8 +89,7 @@ public class DataServlet extends HttpServlet {
     response.sendRedirect(INDEX_HTML);
   }
 
-  private float calcSentiment(String comment) throws IOException
-  {
+  private float calcSentiment(String comment) throws IOException {
     Document doc =
         Document.newBuilder().setContent(comment).setType(Document.Type.PLAIN_TEXT).build();
     LanguageServiceClient languageService = LanguageServiceClient.create();
