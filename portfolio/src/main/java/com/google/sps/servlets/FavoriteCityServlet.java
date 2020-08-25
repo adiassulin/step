@@ -64,21 +64,13 @@ public class FavoriteCityServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String isle = request.getParameter(ISLAND_PARAM);
-    boolean changed = false;
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Query query = new Query(SURVEY_ENTITY);
     PreparedQuery results = datastore.prepare(query);
 
-    for (Entity island : results.asIterable()) {
-      if (((String)island.getProperty(NAME_PROPERTY)).equals(isle)) {
-          changed = true;
-          island.setProperty(SCORE_PROPERTY, (long)island.getProperty(SCORE_PROPERTY) + 1);
-          datastore.put(island);
-      }
-    }
-
-    if (!changed) {
+    //no votes to isle yet
+    if (!updateIslandVote(results, datastore,isle)) {
       Entity entity = new Entity(SURVEY_ENTITY);
       entity.setProperty(NAME_PROPERTY, isle);
       entity.setProperty(SCORE_PROPERTY, 1);
@@ -86,6 +78,21 @@ public class FavoriteCityServlet extends HttpServlet {
     }
     //redirect
     response.sendRedirect(INDEX_HTML);
+  }
+
+  /**
+   * updates the vote number of the given island. returns true if updated, false if the island has no votes yet.
+  */
+  private boolean updateIslandVote(PreparedQuery results, DatastoreService datastore, String isle)
+  {
+      for (Entity island : results.asIterable()) {
+      if (((String)island.getProperty(NAME_PROPERTY)).equals(isle)) {
+          island.setProperty(SCORE_PROPERTY, (long)island.getProperty(SCORE_PROPERTY) + 1);
+          datastore.put(island);
+          return true;
+      }
+    }
+    return false;
   }
 }
 
