@@ -40,7 +40,7 @@ public final class FindMeetingQuery {
 
       //todo: what about negative duration ? 
 
-      Set<TimeRange> notAvialableTimes = new HashSet<>();
+      List<TimeRange> notAvialableTimes = new LinkedList<>();
       for (Event e : events)
       {
           if (attendeesInEvent(e.getAttendees(), request.getAttendees()))
@@ -55,11 +55,11 @@ public final class FindMeetingQuery {
 
 //TODO - implement 
 
-  private Collection<TimeRange> createAvailavleTimes(Set<TimeRange> notAvialableTimes, MeetingRequest request) {
+  private Collection<TimeRange> createAvailavleTimes(List<TimeRange> notAvialableTimes, MeetingRequest request) {
       int currentStart = TimeRange.START_OF_DAY;
       int currentEnd;
-      Collection<TimeRange> avialableTimes = new HashSet<>();
-      Collection.sort(notAvialableTimes, TimeRange.ORDER_BY_START);
+      Collection<TimeRange> avialableTimes = new LinkedList<>();
+      Collections.sort(notAvialableTimes, TimeRange.ORDER_BY_START);
 
       for (TimeRange eventTime: notAvialableTimes)
       {
@@ -69,12 +69,12 @@ public final class FindMeetingQuery {
               avialableTimes.add(TimeRange.fromStartDuration(currentStart, currentEnd - currentStart));
           }
 
-          currentStart = eventTime.end();
+          currentStart = currentStart > eventTime.end() ? currentStart : eventTime.end();
       }
 
       if (TimeRange.END_OF_DAY - currentStart >= request.getDuration())
       {
-          avialableTimes.add(TimeRange.fromStartDuration(currentStart, TimeRange.END_OF_DAY - currentStart));
+          avialableTimes.add(TimeRange.fromStartDuration(currentStart, TimeRange.END_OF_DAY - currentStart + 1));
       }
       return avialableTimes;
   }
