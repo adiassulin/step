@@ -40,7 +40,6 @@ import java.util.*;
 public class DataServletDelete extends HttpServlet {
 
   public static final String TASK_QUERY = "Task";
-
   public static final String INDEX_HTML = "/index.html";
 
   @Override
@@ -54,8 +53,7 @@ public class DataServletDelete extends HttpServlet {
      PreparedQuery results = datastore.prepare(query);
      List<Entity> comments = new ArrayList<>();
      
-     for (Entity en: results.asIterable())
-     {
+     for (Entity en: results.asIterable()) {
         datastore.delete(en.getKey());
      }
 

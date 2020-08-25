@@ -38,15 +38,10 @@ import java.util.*;
 public class FavoriteCityServlet extends HttpServlet {
 
     public static final String SURVEY_ENTITY = "Survey";
-
     public static final String NAME_PROPERTY = "name";
-
     public static final String SCORE_PROPERTY = "score";
-
     public static final String JSON_TYPE_RESPONSE = "application/json";
-
     public static final String ISLAND_PARAM = "island";
-
     public static final String INDEX_HTML = "/index.html";
 
   @Override
@@ -55,14 +50,14 @@ public class FavoriteCityServlet extends HttpServlet {
     Query query = new Query(SURVEY_ENTITY);
     PreparedQuery results = datastore.prepare(query);
 
-    LinkedHashMap<String, Long> favCity = new LinkedHashMap<>();
+    LinkedHashMap<String, Long> favIsland = new LinkedHashMap<>();
     for (Entity island : results.asIterable()) {
-        favCity.put((String) island.getProperty(NAME_PROPERTY), (long)(island.getProperty(SCORE_PROPERTY)));
+        favIsland.put((String) island.getProperty(NAME_PROPERTY), (long)(island.getProperty(SCORE_PROPERTY)));
     }
 
     response.setContentType(JSON_TYPE_RESPONSE);
     Gson gson = new Gson();
-    String json = gson.toJson(favCity);
+    String json = gson.toJson(favIsland);
     response.getWriter().println(json);
   }
 
@@ -76,16 +71,14 @@ public class FavoriteCityServlet extends HttpServlet {
     PreparedQuery results = datastore.prepare(query);
 
     for (Entity island : results.asIterable()) {
-      if (((String)island.getProperty(NAME_PROPERTY)).equals(isle))
-      {
+      if (((String)island.getProperty(NAME_PROPERTY)).equals(isle)) {
           changed = true;
           island.setProperty(SCORE_PROPERTY, (long)island.getProperty(SCORE_PROPERTY) + 1);
           datastore.put(island);
       }
     }
 
-    if (!changed)
-    {
+    if (!changed) {
       Entity entity = new Entity(SURVEY_ENTITY);
       entity.setProperty(NAME_PROPERTY, isle);
       entity.setProperty(SCORE_PROPERTY, 1);
